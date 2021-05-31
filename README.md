@@ -1,14 +1,14 @@
 # ObsidianTweaks
 
 This is a small plugin that implements some features of Obsidian that I believe
-should've been (perhaps in the future they will be? ❤️).
+should've been of the core release -- perhaps in the future they will be? ❤️
 
 ## Features
 
 Below is a list of the current functionality that has been implemented.
 
 Note that hotkeys cannot be 'disabled', but they can be set to <kbd>Blank</kbd>.
-They are all set to blank by default.
+They are all set to <kbd>Blank</kbd> by default.
 
 ### Hotkeys
 | Recommended hotkey | Action |
