@@ -1,57 +1,44 @@
-## Obsidian Sample Plugin
+# ObsidianTweaks
 
-This is a sample plugin for Obsidian (https://obsidian.md).
+This is a small plugin that implements some features of Obsidian that I believe
+should've been (perhaps in the future they will be? ❤️).
 
-This project uses Typescript to provide type checking and documentation.
-The repo depends on the latest plugin API (obsidian.d.ts) in Typescript Definition format, which contains TSDoc comments describing what it does.
+## Features
 
-**Note:** The Obsidian API is still in early alpha and is subject to change at any time!
+Below is a list of the current functionality that has been implemented.
 
-This sample plugin demonstrates some of the basic functionality the plugin API can do.
-- Changes the default font color to red using `styles.css`.
-- Adds a ribbon icon, which shows a Notice when clicked.
-- Adds a command "Open Sample Modal" which opens a Modal.
-- Adds a plugin setting tab to the settings page.
-- Registers a global click event and output 'click' to the console.
-- Registers a global interval which logs 'setInterval' to the console.
+Note that hotkeys cannot be 'disabled', but they can be set to <kbd>Blank</kbd>.
+They are all set to blank by default.
 
-### First time developing plugins?
+### Hotkeys
+| Recommended hotkey | Action |
+| --- | --- |
+| <kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>↓</kbd> | Copy Current Line(s) Down |
+| <kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>↑</kbd> | Copy Current Line(s) Up |
+| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>A</kbd> | Select Current Line(s) |
+| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>1</kbd> | Toggle Heading - H1 |
+| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>2</kbd> | Toggle Heading - H2 |
+| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>3</kbd> | Toggle Heading - H3 |
+| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>4</kbd> | Toggle Heading - H4 |
+| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>5</kbd> | Toggle Heading - H5 |
+| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>6</kbd> | Toggle Heading - H6 |
 
-Quick starting guide for new plugin devs:
+## Philosophy
 
-- Make a copy of this repo as a template with the "Use this template" button (login to GitHub if you don't see it).
-- Clone your repo to a local development folder. For convenience, you can place this folder in your `.obsidian/plugins/your-plugin-name` folder.
-- Install NodeJS, then run `npm i` in the command line under your repo folder.
-- Run `npm run dev` to compile your plugin from `main.ts` to `main.js`.
-- Make changes to `main.ts` (or create new `.ts` files). Those changes should be automatically compiled into `main.js`.
-- Reload Obsidian to load the new version of your plugin.
-- Enable plugin in settings window.
-- For updates to the Obsidian API run `npm update` in the command line under your repo folder.
+- By default no features are enabled. You can enable the features you want.
+  - Thus all features can also be disabled.
+- All code is released into public domain without any requirement for attribution using the [Unlicense](https://unlicense.org/).
 
-### Releasing new releases
+## Why Unlicense?
 
-- Update your `manifest.json` with your new version number, such as `1.0.1`, and the minimum Obsidian version required for your latest release.
-- Update your `versions.json` file with `"new-plugin-version": "minimum-obsidian-version"` so older versions of Obsidian can download an older version of your plugin that's compatible.
-- Create new GitHub release using your new version number as the "Tag version". Use the exact version number, don't include a prefix `v`. See here for an example: https://github.com/obsidianmd/obsidian-sample-plugin/releases
-- Upload the files `manifest.json`, `main.js`, `styles.css` as binary attachments.
-- Publish the release.
+In case the developers of Obsidian want to just straight copy some code into Obsidian, they can do that without worrying about licensing at all.
 
-### Adding your plugin to the community plugin list
+**Note that any contributions to ObsidianTweaks will thus also be Unlicensed.**
 
-- Publish an initial version.
-- Make sure you have a `README.md` file in the root of your repo.
-- Make a pull request at https://github.com/obsidianmd/obsidian-releases to add your plugin.
+## Honorable Mentions
 
-### How to use
+I initally planned to contribute to the [Hotkeys++](https://github.com/argenos/hotkeysplus-obsidian) plugin, but since I don't necessarily want ObsidianTweaks to be limited to hotkeys in the future, I decided to make my own.
 
-- Clone this repo.
-- `npm i` or `yarn` to install dependencies
-- `npm run dev` to start compilation in watch mode.
+## Contributors
 
-### Manually installing the plugin
-
-- Copy over `main.js`, `styles.css`, `manifest.json` to your vault `VaultFolder/.obsidian/plugins/your-plugin-id/`.
-
-### API Documentation
-
-See https://github.com/obsidianmd/obsidian-api
+- [Jeppe Klitgaard](https://github.com/JeppeKlitgaard)

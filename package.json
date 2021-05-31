@@ -1,15 +1,15 @@
 {
-  "name": "obsidian-sample-plugin",
-  "version": "0.12.0",
-  "description": "This is a sample plugin for Obsidian (https://obsidian.md)",
+  "name": "obsidian-tweaks",
+  "version": "0.1.0",
+  "description": "A small plugin that implements some sorely missed features.",
   "main": "main.js",
   "scripts": {
     "dev": "rollup --config rollup.config.js -w",
     "build": "rollup --config rollup.config.js --environment BUILD:production"
   },
-  "keywords": [],
-  "author": "",
-  "license": "MIT",
+  "keywords": ["obsidian"],
+  "author": "Jeppe Klitgaard",
+  "license": "Unlicense",
   "devDependencies": {
     "@rollup/plugin-commonjs": "^18.0.0",
     "@rollup/plugin-node-resolve": "^11.2.1",
