@@ -47,6 +47,20 @@ export default class ObsidianTweaksPlugin extends Plugin {
 				this.directionalCopy.directionalCopy(Direction.Down);
 			}
 		});
+		this.addCommand({
+			id: 'copy-line-left',
+			name: 'Copy Current Line(s) Left',
+			callback: () => {
+				this.directionalCopy.directionalCopy(Direction.Left);
+			}
+		});
+		this.addCommand({
+			id: 'copy-line-right',
+			name: 'Copy Current Line(s) Right',
+			callback: () => {
+				this.directionalCopy.directionalCopy(Direction.Right);
+			}
+		});
 
 		// Set heading
 		this.addCommand({

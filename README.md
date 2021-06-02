@@ -13,8 +13,10 @@ They are all set to <kbd>Blank</kbd> by default.
 ### Hotkeys
 | Recommended hotkey | Action |
 | --- | --- |
-| <kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>↓</kbd> | Copy Current Line(s) Down |
 | <kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>↑</kbd> | Copy Current Line(s) Up |
+| <kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>↓</kbd> | Copy Current Line(s) Down |
+| <kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>←</kbd> | Copy Current Line(s) Left |
+| <kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>→</kbd> | Copy Current Line(s) Right |
 | <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>A</kbd> | Select Current Line(s) |
 | <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>1</kbd> | Toggle Heading - H1 |
 | <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>2</kbd> | Toggle Heading - H2 |

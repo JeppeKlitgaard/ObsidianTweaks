@@ -1,9 +1,12 @@
 import { App, EditableFileView, Editor, MarkdownView } from "obsidian";
 import ObsidianTweaksPlugin from "./main";
+import { DEBUG_HEAD } from "./constants";
 
 export enum Direction {
     Up,
     Down,
+    Left,
+    Right
 }
 
 export class DirectionalCopy {
@@ -21,12 +24,12 @@ export class DirectionalCopy {
             return;
         }
 
-        var anchor = activeView.editor.getCursor("from");
-        var head = activeView.editor.getCursor("to");
+        let anchor = activeView.editor.getCursor("from");
+        let head = activeView.editor.getCursor("to");
 
-        var headLength = activeView.editor.getLine(head.line).length;
+        let headLength = activeView.editor.getLine(head.line).length;
 
-        var textToCopy = activeView.editor.getRange(
+        let textToCopyVertical = activeView.editor.getRange(
             {line: anchor.line, ch: 0},
             {line: head.line, ch: headLength}
         )
@@ -34,7 +37,7 @@ export class DirectionalCopy {
         // Copy up
         if (direction === Direction.Up) {
             activeView.editor.replaceRange(
-                textToCopy + '\n',
+                textToCopyVertical + '\n',
                 {line: anchor.line, ch: 0}
             );
             activeView.editor.setSelection(
@@ -44,11 +47,10 @@ export class DirectionalCopy {
         }
         // Copy down
         else if (direction === Direction.Down) {
-            var addedLines = head.line - anchor.line;
-            console.log(addedLines);
+            let addedLines = head.line - anchor.line;
 
             activeView.editor.replaceRange(
-                '\n' + textToCopy,
+                '\n' + textToCopyVertical,
                 {line: head.line, ch: headLength}
             );
             activeView.editor.setSelection(
@@ -56,8 +58,30 @@ export class DirectionalCopy {
                 {line: head.line + addedLines + 1, ch: head.ch},
             );
         }
+        // Copy left
+        else if (direction === Direction.Left) {
+            let textToCopy = activeView.editor.getSelection();
+
+            activeView.editor.replaceRange(
+                textToCopy,
+                {line: anchor.line, ch: anchor.ch}
+            );
+            activeView.editor.setSelection(
+                {line: anchor.line, ch: anchor.ch},
+                {line: head.line, ch: head.ch},
+            );
+        }
+        // Copy right
+        else if (direction === Direction.Right) {
+            let textToCopy = activeView.editor.getSelection();
+
+            activeView.editor.replaceRange(
+                textToCopy,
+                {line: anchor.line, ch: anchor.ch}
+            );
+        }
         else {
-            console.log("Something went wrong...");
+            console.log(DEBUG_HEAD + "Something went wrong...");
         }
 
         return;
