@@ -51,6 +51,10 @@ Additionally __Bold__ and _Italics_ are implemented with underscores as well
 as asterisks. Simply bind the command you want.
 
 Math toggles are also included.
+
+![Default formatting](images/DefaultFormatting.gif)
+
+![Better formatting](images/BetterFormatting.gif)
 ## Philosophy
 
 - By default no features are enabled. You can enable the features you want.
