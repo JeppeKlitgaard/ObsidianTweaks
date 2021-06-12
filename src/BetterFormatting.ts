@@ -34,6 +34,7 @@ export class BetterFormatting {
 
         let textToWrap = editor.getRange(wordStart, wordEnd)
 
+        // Fix for inconsistent toggling
         if (textToWrap.trim() === "") {
             wordStart = anchor
             wordEnd = anchor
@@ -55,13 +56,33 @@ export class BetterFormatting {
 
             // Update textToWrap again
             textToWrap = editor.getRange(wordStart, wordEnd)
-
         }
 
         let alreadyWrapped = (
             textToWrap.startsWith(symbolStart) &&
             textToWrap.endsWith(symbolEnd)
         )
+
+        // Fix for not all symbols considered part of word
+        if (!alreadyWrapped) {
+            let preWordStart = editor.getRange(
+                {line: wordStart.line, ch: wordStart.ch - symbolStart.length},
+                {line: wordStart.line, ch: wordStart.ch},
+            )
+            let postWordStart = editor.getRange(
+                {line: wordEnd.line, ch: wordEnd.ch},
+                {line: wordEnd.line, ch: wordEnd.ch + symbolEnd.length},
+            )
+
+            if (preWordStart === symbolStart && postWordStart === symbolEnd) {
+                wordStart = {line: wordStart.line, ch: wordStart.ch - symbolStart.length}
+                wordEnd = {line: wordEnd.line, ch: wordEnd.ch + symbolEnd.length}
+
+                // Update textToWrap
+                textToWrap = editor.getRange(wordStart, wordEnd)
+                alreadyWrapped = true
+            }
+        }
 
         let newText: string
         if (alreadyWrapped) {
