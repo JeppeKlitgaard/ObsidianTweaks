@@ -13,11 +13,21 @@ They are all set to <kbd>Blank</kbd> by default.
 ### Hotkeys
 | Recommended hotkey | Action |
 | --- | --- |
+| <kbd>Alt</kbd> + <kbd>←</kbd> | Move Selection Left |
+| <kbd>Alt</kbd> + <kbd>→</kbd> | Move Selection Right |
+| <kbd>Blank</kbd> | Toggle Better Bold (asterisks) |
+| <kbd>Ctrl</kbd> + <kbd>B</kbd> | Toggle Better Bold (underscores) |
+| <kbd>Blank</kbd> | Toggle Better Italics (asterisks) |
+| <kbd>Ctrl</kbd> + <kbd>I</kbd> | Toggle Better Italics (underscores) |
+| <kbd>Blank</kbd> | Toggle Better Code |
+| <kbd>CTRL</kbd> + <kbd>/</kbd> | Toggle Better Comment |
+| <kbd>Blank</kbd> | Toggle Better Highlight |
+| <kbd>Blank</kbd> | Toggle Better Strikethrough |
+| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>A</kbd> | Select Current Line(s) |
 | <kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>↑</kbd> | Copy Current Line(s) Up |
 | <kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>↓</kbd> | Copy Current Line(s) Down |
 | <kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>←</kbd> | Copy Current Line(s) Left |
 | <kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>→</kbd> | Copy Current Line(s) Right |
-| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>A</kbd> | Select Current Line(s) |
 | <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>1</kbd> | Toggle Heading - H1 |
 | <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>2</kbd> | Toggle Heading - H2 |
 | <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>3</kbd> | Toggle Heading - H3 |
@@ -25,6 +35,22 @@ They are all set to <kbd>Blank</kbd> by default.
 | <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>5</kbd> | Toggle Heading - H5 |
 | <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>6</kbd> | Toggle Heading - H6 |
 
+### Move selection
+
+Move selection does not support going across lines. This seems unnecessary and
+is really messy to implement.
+### Better Toggles
+
+The default toggles in Obsidian can be quite wonky and do not always
+work well. The toggles implemented here should always return to the
+same state when toggled twice.
+
+They also do nice word-wrapping for you.
+
+Additionally __Bold__ and _Italics_ are implemented with underscores as well
+as asterisks. Simply bind the command you want.
+
+Math toggles are also included.
 ## Philosophy
 
 - By default no features are enabled. You can enable the features you want.
