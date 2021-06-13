@@ -1,7 +1,7 @@
 # ObsidianTweaks
 
 This is a small plugin that implements some features of Obsidian that I believe
-should've been of the core release -- perhaps in the future they will be? ❤️
+should've been part of the core release -- perhaps in the future they will be? ❤️
 
 ## Installation
 
