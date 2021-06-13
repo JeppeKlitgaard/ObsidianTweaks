@@ -33,7 +33,7 @@ They are all set to <kbd>Blank</kbd> by default.
 | <kbd>Blank</kbd> | Better Toggle Italics (asterisks) |
 | <kbd>Ctrl</kbd> + <kbd>I</kbd> | Better Toggle Italics (underscores) |
 | <kbd>Blank</kbd> | Better Toggle Code |
-| <kbd>CTRL</kbd> + <kbd>/</kbd> | Better Toggle Comment |
+| <kbd>Ctrl</kbd> + <kbd>/</kbd> | Better Toggle Comment |
 | <kbd>Blank</kbd> | Better Toggle Highlight |
 | <kbd>Blank</kbd> | Better Toggle Strikethrough |
 | <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>A</kbd> | Select Current Line(s) |
