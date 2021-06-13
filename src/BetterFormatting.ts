@@ -74,9 +74,16 @@ export class BetterFormatting {
                 {line: wordEnd.line, ch: wordEnd.ch + symbolEnd.length},
             )
 
-            if (preWordStart === symbolStart && postWordStart === symbolEnd) {
-                wordStart = {line: wordStart.line, ch: wordStart.ch - symbolStart.length}
-                wordEnd = {line: wordEnd.line, ch: wordEnd.ch + symbolEnd.length}
+            if (
+                (preWordStart === symbolStart || textToWrap.startsWith(symbolStart)) &&
+                (postWordStart === symbolEnd || textToWrap.endsWith(symbolEnd))
+             ) {
+                // Calculate which offsets to use depending on which of the cases above
+                let startOffset = textToWrap.startsWith(symbolStart) ? 0 : -2
+                let endOffset = textToWrap.endsWith(symbolEnd) ? 0 : 2
+
+                wordStart = {line: wordStart.line, ch: wordStart.ch + startOffset}
+                wordEnd = {line: wordEnd.line, ch: wordEnd.ch + endOffset}
 
                 // Update textToWrap
                 textToWrap = editor.getRange(wordStart, wordEnd)

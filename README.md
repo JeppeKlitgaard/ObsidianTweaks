@@ -54,7 +54,7 @@ Move selection does not support going across lines. This seems unnecessary and
 is really messy to implement.
 ### Better Toggles
 
-The default toggles in Obsidian can be quite wonky and do not always
+The default toggles in Obsidian can be a bit wonky at times and do not always
 work well. The toggles implemented here should always return to the
 same state when toggled twice.
 
