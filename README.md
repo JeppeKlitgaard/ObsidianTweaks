@@ -28,14 +28,14 @@ They are all set to <kbd>Blank</kbd> by default.
 | --- | --- |
 | <kbd>Alt</kbd> + <kbd>←</kbd> | Move Selection Left |
 | <kbd>Alt</kbd> + <kbd>→</kbd> | Move Selection Right |
-| <kbd>Blank</kbd> | Toggle Better Bold (asterisks) |
-| <kbd>Ctrl</kbd> + <kbd>B</kbd> | Toggle Better Bold (underscores) |
-| <kbd>Blank</kbd> | Toggle Better Italics (asterisks) |
-| <kbd>Ctrl</kbd> + <kbd>I</kbd> | Toggle Better Italics (underscores) |
-| <kbd>Blank</kbd> | Toggle Better Code |
-| <kbd>CTRL</kbd> + <kbd>/</kbd> | Toggle Better Comment |
-| <kbd>Blank</kbd> | Toggle Better Highlight |
-| <kbd>Blank</kbd> | Toggle Better Strikethrough |
+| <kbd>Blank</kbd> | Better Toggle Bold (asterisks) |
+| <kbd>Ctrl</kbd> + <kbd>B</kbd> | Better Toggle Bold (underscores) |
+| <kbd>Blank</kbd> | Better Toggle Italics (asterisks) |
+| <kbd>Ctrl</kbd> + <kbd>I</kbd> | Better Toggle Italics (underscores) |
+| <kbd>Blank</kbd> | Better Toggle Code |
+| <kbd>CTRL</kbd> + <kbd>/</kbd> | Better Toggle Comment |
+| <kbd>Blank</kbd> | Better Toggle Highlight |
+| <kbd>Blank</kbd> | Better Toggle Strikethrough |
 | <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>A</kbd> | Select Current Line(s) |
 | <kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>↑</kbd> | Copy Current Line(s) Up |
 | <kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>↓</kbd> | Copy Current Line(s) Down |
