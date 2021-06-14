@@ -23,7 +23,7 @@ Below is a list of the current functionality that has been implemented.
 Note that hotkeys cannot be 'disabled', but they can be set to <kbd>Blank</kbd>.
 They are all set to <kbd>Blank</kbd> by default.
 
-### Hotkeys
+### Commands
 | Recommended hotkey | Action |
 | --- | --- |
 | <kbd>Alt</kbd> + <kbd>←</kbd> | Move Selection Left |
