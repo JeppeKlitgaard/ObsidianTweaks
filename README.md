@@ -16,12 +16,18 @@ Until then manual installation is required:
 5. Reload plugins (easiest way is just restarting Obsidian)
 6. Activate the plugin as normal.
 
+## Philosophy
+
+- **By default no features are enabled**. You can enable the features you want.
+  - Thus all features can also be disabled.
+- All code is released into public domain without any requirement for attribution using the [Unlicense](https://unlicense.org/).
+
 ## Features
 
-Below is a list of the current functionality that has been implemented.
+Below is a list of the current functionality available for you to enable.
 
 Note that hotkeys cannot be 'disabled', but they can be set to <kbd>Blank</kbd>.
-They are all set to <kbd>Blank</kbd> by default.
+They are all set to <kbd>Blank</kbd> by default. Go to `Settings > Hotkeys` to set the shortcut to match suggestions below, or use your own binding!
 
 ### Commands
 | Recommended hotkey | Action |
@@ -68,11 +74,6 @@ Math toggles are also included.
 ![Default formatting](images/DefaultFormatting.gif)
 
 ![Better formatting](images/BetterFormatting.gif)
-## Philosophy
-
-- By default no features are enabled. You can enable the features you want.
-  - Thus all features can also be disabled.
-- All code is released into public domain without any requirement for attribution using the [Unlicense](https://unlicense.org/).
 
 ## Why Unlicense?
 
