@@ -75,6 +75,45 @@ Math toggles are also included.
 
 ![Better formatting](images/BetterFormatting.gif)
 
+## How to install
+
+Install the Obsidian plugin via one of the three methods described below.
+
+### Community Plugins
+
+Install this plugin via the Obsidian Community Plugin interface (**Currently not yet released, so this method DOES NOT WORK CURRENTLY**)
+
+You can activate this plugin within Obsidian by doing the following:
+
+    - Open Settings > Third-party plugin
+    - Make sure Safe mode is off
+    - Click Browse community plugins
+    - Search for "**AnkiBridge**"
+    - Click Install
+    - Once installed, close the community plugins window and activate the newly installed plugin
+
+### BRAT
+
+If you have [Obsidian BRAT](https://github.com/TfTHacker/obsidian42-brat) plugin installed you can install ObsidianTweaks by doing the following:
+
+    - Open `Command Palette`
+    - Select the `Obsidian42 - BRAT: Add a beta plugin for testing` command
+    - Paste in `JeppeKlitgaard/ObsidianTweaks` into the text field
+    - Press `Add Plugin`
+    - Activate the plugin now found under the `Settings → Community Plugins` menu
+
+### Manual Installation
+
+    Alternatively you can do a manual installation:
+    
+    - Download the latest `ObsidianTweaks-X.Y.Z.zip` from GitHub releases.
+    - Create a new folder named `ObsidianTweaks`
+    - Extract the files within the zip file into `ObsidianTweaks` folder
+    - Place the folder in your .obsidian/plugins directory
+    - Reload plugins (the easiest way is just restarting Obsidian)
+    - Activate the plugin as normal.
+
+
 ## Why Unlicense?
 
 In case the developers of Obsidian want to just straight copy some code into Obsidian, they can do that without worrying about licensing at all.
