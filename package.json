@@ -4,8 +4,10 @@
   "description": "A small plugin that implements some sorely missed features.",
   "main": "main.js",
   "scripts": {
-    "dev": "rollup --config rollup.config.js -w",
-    "build": "rollup --config rollup.config.js --environment BUILD:production"
+    "build": "node esbuild.config.mjs production",
+    "check": "tsc --noEmit --watch",
+    "dev": "node esbuild.config.mjs",
+    "lint": "eslint \"src/**/*.{ts,tsx}\" --quiet --fix",
   },
   "keywords": [
     "obsidian"
