@@ -1,5 +1,5 @@
 import { App, MarkdownView } from 'obsidian'
-import ObsidianTweaksPlugin from './main'
+import ObsidianTweaksPlugin from 'main'
 
 export enum Heading {
   H1 = 1,

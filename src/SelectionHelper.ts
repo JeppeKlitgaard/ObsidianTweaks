@@ -1,5 +1,5 @@
 import { App, MarkdownView } from 'obsidian'
-import ObsidianTweaksPlugin from './main'
+import ObsidianTweaksPlugin from 'main'
 
 export class SelectionHelper {
   public app: App
@@ -16,6 +16,9 @@ export class SelectionHelper {
       return
     }
 
+
+
+
     const editor = activeView.editor
 
     const anchor = editor.getCursor('from')
@@ -30,6 +33,7 @@ export class SelectionHelper {
 
     return
   }
+
 
   selectWord(): void {
     const activeView = this.app.workspace.getActiveViewOfType(MarkdownView)

@@ -1,5 +1,5 @@
 import { App, EditorPosition, MarkdownView } from 'obsidian'
-import ObsidianTweaksPlugin from './main'
+import ObsidianTweaksPlugin from 'main'
 
 export class BetterFormatting {
   public app: App

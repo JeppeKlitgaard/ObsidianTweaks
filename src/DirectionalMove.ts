@@ -1,6 +1,6 @@
 import { App, MarkdownView } from 'obsidian'
-import ObsidianTweaksPlugin from './main'
-import { Direction } from './Constants'
+import ObsidianTweaksPlugin from 'main'
+import { Direction } from 'Constants'
 
 export class DirectionalMove {
   public app: App
