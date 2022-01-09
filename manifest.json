@@ -1,6 +1,6 @@
 {
 	"id": "obsidian-tweaks",
-	"name": "Obsidian Tweaks",
+	"name": "ObsidianTweaks",
 	"version": "0.2.3",
 	"minAppVersion": "0.13.19",
 	"description": "A small plugin that implements some sorely missed features.",

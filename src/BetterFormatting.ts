@@ -83,7 +83,6 @@ export class BetterFormatting {
       }
     }
 
-
     let newText: string
     if (alreadyWrapped) {
       newText = textToWrap.substring(symbolStart.length, textToWrap.length - symbolEnd.length)

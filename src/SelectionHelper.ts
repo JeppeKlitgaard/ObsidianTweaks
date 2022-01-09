@@ -16,9 +16,6 @@ export class SelectionHelper {
       return
     }
 
-
-
-
     const editor = activeView.editor
 
     const anchor = editor.getCursor('from')
@@ -33,7 +30,6 @@ export class SelectionHelper {
 
     return
   }
-
 
   selectWord(): void {
     const activeView = this.app.workspace.getActiveViewOfType(MarkdownView)
