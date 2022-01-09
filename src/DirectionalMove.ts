@@ -19,7 +19,7 @@ export class DirectionalMove {
 
     // We need to use cm directly to get control of change origins.
     // In the future Obsidian API will likely include support for this.
-    const editor = activeView.editor.cm
+    const editor = activeView.editor
 
     const selection = editor.getSelection()
 
@@ -55,7 +55,6 @@ export class DirectionalMove {
       editor.setSelection(
         { line: anchor.line, ch: anchor.ch - 1 },
         { line: head.line, ch: head.ch - 1 },
-        { origin: 'tweakMoveLeft' },
       )
     } else if (direction === Direction.Right) {
       if (head.ch + 1 > editor.getLine(head.line).length) {
@@ -85,7 +84,6 @@ export class DirectionalMove {
       editor.setSelection(
         { line: anchor.line, ch: anchor.ch + 1 },
         { line: head.line, ch: head.ch + 1 },
-        { origin: 'tweakMoveLeft' },
       )
     } else {
       this.plugin.debug('Something went wrong...')

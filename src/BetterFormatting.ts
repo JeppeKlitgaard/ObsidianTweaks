@@ -27,8 +27,8 @@ export class BetterFormatting {
     let wordStart: EditorPosition
     let wordEnd: EditorPosition
 
-    wordStart = editor.cm.findWordAt(anchor).anchor
-    wordEnd = editor.cm.findWordAt(head).head
+    wordStart = editor.wordAt(anchor).from
+    wordEnd = editor.wordAt(head).to
 
     let textToWrap = editor.getRange(wordStart, wordEnd)
 
@@ -46,7 +46,7 @@ export class BetterFormatting {
       // is weird.
       // Let's fix
       if (charBefore.trim() !== '') {
-        wordStart = editor.cm.findWordAt({ line: wordStart.line, ch: wordStart.ch - 1 }).anchor
+        wordStart = editor.wordAt({ line: wordStart.line, ch: wordStart.ch - 1 }).from
       }
 
       // Update textToWrap again
@@ -82,6 +82,7 @@ export class BetterFormatting {
         alreadyWrapped = true
       }
     }
+
 
     let newText: string
     if (alreadyWrapped) {
