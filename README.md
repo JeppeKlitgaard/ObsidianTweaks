@@ -1,5 +1,8 @@
 # ObsidianTweaks
 
+[![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/JeppeKlitgaard/ObsidianTweaks?style=for-the-badge&sort=semver)](https://github.com/JeppeKlitgaard/ObsidianTweaks/releases/latest)
+![GitHub All Releases](https://img.shields.io/github/downloads/JeppeKlitgaard/ObsidianTweaks/total?style=for-the-badge)
+
 This is a small plugin that implements some features of Obsidian that I believe
 should've been part of the core release -- perhaps in the future they will be? ❤️
 
