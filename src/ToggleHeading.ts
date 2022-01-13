@@ -1,7 +1,17 @@
-import { App, MarkdownView } from 'obsidian'
+import {
+  App,
+  Editor,
+  EditorChange,
+  EditorPosition,
+  EditorTransaction,
+  MarkdownView,
+} from 'obsidian'
 import ObsidianTweaksPlugin from 'main'
+import { getMainSelection, selectionToRange } from 'Utils'
+import _ from 'lodash'
 
 export enum Heading {
+  NORMAL = 0,
   H1 = 1,
   H2,
   H3,
@@ -14,17 +24,45 @@ export class ToggleHeading {
   public app: App
   private plugin: ObsidianTweaksPlugin
 
+  private static HEADING_REGEX = /^(#*)( *)(.*)/
+
   constructor(app: App, plugin: ObsidianTweaksPlugin) {
     this.app = app
     this.plugin = plugin
   }
 
-  toggleHeading(heading: Heading): void {
-    // Three possibilities:
-    // 1: Currently no heading text. Set the heading.
-    // 2: Currently this heading text. Remove the heading.
-    // 3: Currently some other heading. Remove the heading and set this heading.
+  private setHeading(editor: Editor, heading: Heading, line: number): EditorChange {
+    const headingStr = '#'.repeat(heading)
+    const text = editor.getLine(line)
+    const matches = ToggleHeading.HEADING_REGEX.exec(text)
+    console.log(matches)
 
+    const from: EditorPosition = {
+      line: line,
+      ch: 0,
+    }
+    const to: EditorPosition = {
+      line: line,
+      ch: matches[1].length + matches[2].length,
+    }
+
+    const replacementStr = heading === Heading.NORMAL ? '' : headingStr + ' '
+
+    return {
+      from: from,
+      to: to,
+      text: replacementStr,
+    }
+  }
+
+  private getHeadingOfLine(editor: Editor, line: number): Heading {
+    const text = editor.getLine(line)
+    const matches = ToggleHeading.HEADING_REGEX.exec(text)
+
+    return matches[1].length
+  }
+
+  toggleHeading(heading: Heading): void {
     const activeView = this.app.workspace.getActiveViewOfType(MarkdownView)
     if (!activeView) {
       return
@@ -32,40 +70,35 @@ export class ToggleHeading {
 
     const editor = activeView.editor
 
-    const headingText = '#'.repeat(heading)
-    const regex = /^((#*) )?.*/
-
     const selections = editor.listSelections()
+    const mainSelection = getMainSelection(editor)
+    const mainRange = selectionToRange(mainSelection)
 
-    for (const selection of selections) {
-      const anchor = selection.anchor
-      const lineText = editor.getLine(anchor.line)
+    const mainHeading = this.getHeadingOfLine(editor, mainRange.from.line)
+    const targetHeading = heading === mainHeading ? Heading.NORMAL : heading
 
-      const matches = regex.exec(lineText)
+    const changes: Array<EditorChange> = []
 
-      if (matches[2] !== undefined) {
-        // Some heading
-        if (matches[2] === headingText) {
-          // Option 2
-          editor.replaceRange(
-            '',
-            { line: anchor.line, ch: 0 },
-            { line: anchor.line, ch: matches[2].length + 1 },
-          )
-          continue
-        } else {
-          // Option 3
-          editor.replaceRange(
-            headingText + ' ',
-            { line: anchor.line, ch: 0 },
-            { line: anchor.line, ch: matches[2].length + 1 },
-          )
-          continue
-        }
+    const linesToSet: Array<number> = _.uniq(
+      _.flatten(
+        selections.map((x) => {
+          const range = selectionToRange(x)
+          return _.range(range.from.line, range.to.line + 1)
+        }),
+      ),
+    )
+
+    for (const line of linesToSet) {
+      if (editor.getLine(line) === '') {
+        continue
       }
-      // Option 1
-      editor.replaceRange(headingText + ' ', { line: anchor.line, ch: 0 })
-      continue
+      changes.push(this.setHeading(editor, targetHeading, line))
     }
+
+    const transaction: EditorTransaction = {
+      changes: changes,
+    }
+
+    editor.transaction(transaction, 'ToggleHeading' + heading.toString())
   }
 }

@@ -17,9 +17,11 @@ export function getMainIdx(
 }
 
 export function selectionToRange(selection: EditorSelection): EditorRange {
+  const sortedPositions = _.sortBy([selection.anchor, selection.head], 'line', 'ch')
+
   return {
-    from: selection.anchor,
-    to: selection.head,
+    from: sortedPositions[0],
+    to: sortedPositions[1],
   }
 }
 
