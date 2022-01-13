@@ -1,14 +1,8 @@
 import { App, Editor, EditorPosition, EditorRange, EditorSelection, MarkdownView } from 'obsidian'
 import ObsidianTweaksPlugin from 'main'
 import _ from 'lodash'
-
-interface CursorOffset {
-  line: number
-  ch: number
-  amount: number
-}
-
-type CursorOffsets = Array<CursorOffset>
+import { CursorOffsets } from 'Entities'
+import { applyOffsets, selectionToRange } from 'Utils'
 
 export class BetterFormatting {
   public app: App
@@ -183,18 +177,14 @@ export class BetterFormatting {
     return [startOffset, endOffset]
   }
 
-  private toggleSelection(
+  private setSelectionWrapState(
     editor: Editor,
     selection: EditorSelection,
+    wrapState: boolean,
     symbolStart: string,
     symbolEnd: string,
   ): CursorOffsets {
-    const anchor = selection.anchor
-    const head = selection.head
-    const initialRange: EditorRange = {
-      from: anchor,
-      to: head,
-    }
+    const initialRange = selectionToRange(selection)
     const textRange: EditorRange = this.expandRangeByWords(
       editor,
       initialRange,
@@ -204,40 +194,19 @@ export class BetterFormatting {
 
     // Check if already wrapped
     const alreadyWrapped = this.isWrapped(editor, textRange, symbolStart, symbolEnd)
+    if (alreadyWrapped === wrapState) {
+      return []
+    }
 
     // Wrap or unwrap
     let cursorOffsets: CursorOffsets
-    if (alreadyWrapped) {
-      cursorOffsets = this.unwrap(editor, textRange, symbolStart, symbolEnd)
-    } else {
+    if (wrapState) {
       cursorOffsets = this.wrap(editor, textRange, symbolStart, symbolEnd)
+    } else {
+      cursorOffsets = this.unwrap(editor, textRange, symbolStart, symbolEnd)
     }
 
     return cursorOffsets
-  }
-
-  private static positionIsAfter(position: EditorPosition, offset: CursorOffset): boolean {
-    return position.line == offset.line && position.ch >= offset.ch
-  }
-
-  private static applyOffsets(selections: Array<EditorSelection>, offsets: CursorOffsets): void {
-    for (const offset of offsets) {
-      selections.forEach((sel) => {
-        if (BetterFormatting.positionIsAfter(sel.anchor, offset)) {
-          sel.anchor = {
-            line: sel.anchor.line,
-            ch: sel.anchor.ch + offset.amount,
-          }
-        }
-
-        if (BetterFormatting.positionIsAfter(sel.head, offset)) {
-          sel.head = {
-            line: sel.head.line,
-            ch: sel.head.ch + offset.amount,
-          }
-        }
-      })
-    }
   }
 
   toggleWrapper(symbolStart: string, symbolEnd?: string): void {
@@ -263,12 +232,30 @@ export class BetterFormatting {
 
     const mainSelectionIdx = _(selections).findIndex(mainSelection)
 
+    // Get wrapped state of main selection
+    const mainRange: EditorRange = this.expandRangeByWords(
+      editor,
+      selectionToRange(mainSelection),
+      symbolStart,
+      symbolEnd,
+    )
+
+    // Check if already wrapped
+    const isWrapped = this.isWrapped(editor, mainRange, symbolStart, symbolEnd)
+    const targetWrapState = !isWrapped
+
     // re-get selection each time to get new ch offsets
     for (let i = 0; i < selections.length; i++) {
       const selection = selections[i]
 
-      const cursorOffsets = this.toggleSelection(editor, selection, symbolStart, symbolEnd)
-      BetterFormatting.applyOffsets(selections, cursorOffsets)
+      const cursorOffsets = this.setSelectionWrapState(
+        editor,
+        selection,
+        targetWrapState,
+        symbolStart,
+        symbolEnd,
+      )
+      applyOffsets(selections, cursorOffsets)
     }
 
     editor.setSelections(selections, mainSelectionIdx)

@@ -4,8 +4,9 @@ import { BetterFormatting } from 'BetterFormatting'
 import { DirectionalMove } from 'DirectionalMove'
 import { DirectionalCopy } from 'DirectionalCopy'
 import { ToggleHeading, Heading } from 'ToggleHeading'
-import { DEBUG_HEAD, Direction } from 'Constants'
+import { DEBUG_HEAD } from 'Constants'
 import { DEFAULT_SETTINGS, ObsidianTweaksSettings, ObsidianTweaksSettingTab } from 'Settings'
+import { Direction } from 'Entities'
 
 export default class ObsidianTweaksPlugin extends Plugin {
   public settings: ObsidianTweaksSettings
