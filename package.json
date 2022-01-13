@@ -15,6 +15,7 @@
   "author": "Jeppe Klitgaard",
   "license": "Unlicense",
   "devDependencies": {
+    "@types/lodash": "^4.14.178",
     "@types/node": "^14.14.37",
     "@typescript-eslint/eslint-plugin": "^5.9.0",
     "@typescript-eslint/parser": "^5.9.0",
@@ -26,6 +27,7 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-unused-imports": "^2.0.0",
+    "lodash": "^4.17.21",
     "obsidian": "^0.13.11",
     "prettier": "^2.5.1",
     "rollup": "^2.32.1",
