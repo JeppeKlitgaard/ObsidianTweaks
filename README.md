@@ -1,20 +1,10 @@
 # ObsidianTweaks
 
+[![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/JeppeKlitgaard/ObsidianTweaks?style=for-the-badge&sort=semver)](https://github.com/JeppeKlitgaard/ObsidianTweaks/releases/latest)
+![GitHub All Releases](https://img.shields.io/github/downloads/JeppeKlitgaard/ObsidianTweaks/total?style=for-the-badge)
+
 This is a small plugin that implements some features of Obsidian that I believe
 should've been part of the core release -- perhaps in the future they will be? ❤️
-
-## Installation
-
-In the future I hope ObsidianTweaks will be added to the Community Repository of plugins and be installable directly in Obsidian.
-
-Until then manual installation is required:
-
-1. Download the latest main.js & mainfest.json from releases.
-2. Create a new folder named 'obsidian-tweaks'
-3. Place the files in the folder
-4. Place the folder in your .obsidian/plugins directory
-5. Reload plugins (easiest way is just restarting Obsidian)
-6. Activate the plugin as normal.
 
 ## Philosophy
 
