@@ -33,35 +33,39 @@ export class ToggleHeading {
     const editor = activeView.editor
 
     const headingText = '#'.repeat(heading)
-    const anchor = editor.getCursor('from')
-
-    const lineText = editor.getLine(anchor.line)
-
     const regex = /^((#*) )?.*/
-    const matches = regex.exec(lineText)
 
-    if (matches[2] !== undefined) {
-      // Some heading
-      if (matches[2] === headingText) {
-        // Option 2
-        editor.replaceRange(
-          '',
-          { line: anchor.line, ch: 0 },
-          { line: anchor.line, ch: matches[2].length + 1 },
-        )
-        return
-      } else {
-        // Option 3
-        editor.replaceRange(
-          headingText + ' ',
-          { line: anchor.line, ch: 0 },
-          { line: anchor.line, ch: matches[2].length + 1 },
-        )
-        return
+    const selections = editor.listSelections()
+
+    for (const selection of selections) {
+      const anchor = selection.anchor
+      const lineText = editor.getLine(anchor.line)
+
+      const matches = regex.exec(lineText)
+
+      if (matches[2] !== undefined) {
+        // Some heading
+        if (matches[2] === headingText) {
+          // Option 2
+          editor.replaceRange(
+            '',
+            { line: anchor.line, ch: 0 },
+            { line: anchor.line, ch: matches[2].length + 1 },
+          )
+          continue
+        } else {
+          // Option 3
+          editor.replaceRange(
+            headingText + ' ',
+            { line: anchor.line, ch: 0 },
+            { line: anchor.line, ch: matches[2].length + 1 },
+          )
+          continue
+        }
       }
+      // Option 1
+      editor.replaceRange(headingText + ' ', { line: anchor.line, ch: 0 })
+      continue
     }
-
-    editor.replaceRange(headingText + ' ', { line: anchor.line, ch: 0 })
-    return
   }
 }

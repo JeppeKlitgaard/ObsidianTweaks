@@ -1,5 +1,20 @@
-import { EditorPosition, EditorSelection, EditorRange } from 'obsidian'
+import { EditorPosition, EditorSelection, EditorRange, Editor } from 'obsidian'
 import { CursorOffset, CursorOffsets } from 'Entities'
+import _ from 'lodash'
+
+export function getMainSelection(editor: Editor): EditorSelection {
+  return {
+    anchor: editor.getCursor('anchor'),
+    head: editor.getCursor('head'),
+  }
+}
+
+export function getMainIdx(
+  mainSelection: EditorSelection,
+  selections: Array<EditorSelection>,
+): number {
+  return _(selections).findIndex(mainSelection)
+}
 
 export function selectionToRange(selection: EditorSelection): EditorRange {
   return {

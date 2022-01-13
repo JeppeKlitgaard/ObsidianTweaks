@@ -1,8 +1,7 @@
 import { App, Editor, EditorPosition, EditorRange, EditorSelection, MarkdownView } from 'obsidian'
 import ObsidianTweaksPlugin from 'main'
-import _ from 'lodash'
 import { CursorOffsets } from 'Entities'
-import { applyOffsets, selectionToRange } from 'Utils'
+import { applyOffsets, getMainIdx, getMainSelection, selectionToRange } from 'Utils'
 
 export class BetterFormatting {
   public app: App
@@ -225,12 +224,9 @@ export class BetterFormatting {
     }
 
     const selections = editor.listSelections()
-    const mainSelection: EditorSelection = {
-      anchor: editor.getCursor('anchor'),
-      head: editor.getCursor('head'),
-    }
 
-    const mainSelectionIdx = _(selections).findIndex(mainSelection)
+    const mainSelection = getMainSelection(editor)
+    const mainSelectionIdx = getMainIdx(mainSelection, selections)
 
     // Get wrapped state of main selection
     const mainRange: EditorRange = this.expandRangeByWords(
