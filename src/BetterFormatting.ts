@@ -1,7 +1,15 @@
-import { App, Editor, EditorPosition, EditorRange, EditorSelection, MarkdownView } from 'obsidian'
+import {
+  App,
+  Editor,
+  EditorChange,
+  EditorPosition,
+  EditorRange,
+  EditorSelection,
+  EditorTransaction,
+  MarkdownView,
+} from 'obsidian'
 import ObsidianTweaksPlugin from 'main'
-import { CursorOffsets } from 'Entities'
-import { applyOffsets, getMainIdx, getMainSelection, selectionToRange } from 'Utils'
+import { getMainSelection, selectionToRange } from 'Utils'
 
 export class BetterFormatting {
   public app: App
@@ -123,27 +131,19 @@ export class BetterFormatting {
     textRange: EditorRange,
     symbolStart: string,
     symbolEnd: string,
-  ): CursorOffsets {
-    const newString = symbolStart + editor.getRange(textRange.from, textRange.to) + symbolEnd
-    editor.replaceRange(
-      newString,
-      textRange.from,
-      textRange.to,
-      '+BetterFormatting_' + symbolStart + symbolEnd,
-    )
+  ): Array<EditorChange> {
+    const changes: Array<EditorChange> = [
+      {
+        from: textRange.from,
+        text: symbolStart,
+      },
+      {
+        from: textRange.to,
+        text: symbolStart,
+      },
+    ]
 
-    const startOffset = {
-      line: textRange.from.line,
-      ch: textRange.from.ch,
-      amount: symbolStart.length,
-    }
-    const endOffset = {
-      line: textRange.to.line,
-      ch: textRange.to.ch + symbolStart.length,
-      amount: symbolEnd.length,
-    }
-
-    return [startOffset, endOffset]
+    return changes
   }
 
   private unwrap(
@@ -151,29 +151,27 @@ export class BetterFormatting {
     textRange: EditorRange,
     symbolStart: string,
     symbolEnd: string,
-  ): CursorOffsets {
-    const oldString = editor.getRange(textRange.from, textRange.to)
-    const newString = oldString.substring(symbolStart.length, oldString.length - symbolEnd.length)
+  ): Array<EditorChange> {
+    const changes: Array<EditorChange> = [
+      {
+        from: textRange.from,
+        to: {
+          line: textRange.from.line,
+          ch: textRange.from.ch + symbolStart.length,
+        },
+        text: '',
+      },
+      {
+        from: {
+          line: textRange.to.line,
+          ch: textRange.to.ch - symbolEnd.length,
+        },
+        to: textRange.to,
+        text: '',
+      },
+    ]
 
-    editor.replaceRange(
-      newString,
-      textRange.from,
-      textRange.to,
-      '-BetterFormatting_' + symbolStart + symbolEnd,
-    )
-
-    const startOffset = {
-      line: textRange.from.line,
-      ch: textRange.from.ch,
-      amount: -symbolStart.length,
-    }
-    const endOffset = {
-      line: textRange.to.line,
-      ch: textRange.to.ch,
-      amount: -symbolEnd.length,
-    }
-
-    return [startOffset, endOffset]
+    return changes
   }
 
   private setSelectionWrapState(
@@ -182,7 +180,7 @@ export class BetterFormatting {
     wrapState: boolean,
     symbolStart: string,
     symbolEnd: string,
-  ): CursorOffsets {
+  ): Array<EditorChange> {
     const initialRange = selectionToRange(selection)
     const textRange: EditorRange = this.expandRangeByWords(
       editor,
@@ -198,14 +196,11 @@ export class BetterFormatting {
     }
 
     // Wrap or unwrap
-    let cursorOffsets: CursorOffsets
     if (wrapState) {
-      cursorOffsets = this.wrap(editor, textRange, symbolStart, symbolEnd)
-    } else {
-      cursorOffsets = this.unwrap(editor, textRange, symbolStart, symbolEnd)
+      return this.wrap(editor, textRange, symbolStart, symbolEnd)
     }
 
-    return cursorOffsets
+    return this.unwrap(editor, textRange, symbolStart, symbolEnd)
   }
 
   toggleWrapper(symbolStart: string, symbolEnd?: string): void {
@@ -224,9 +219,7 @@ export class BetterFormatting {
     }
 
     const selections = editor.listSelections()
-
     const mainSelection = getMainSelection(editor)
-    const mainSelectionIdx = getMainIdx(mainSelection, selections)
 
     // Get wrapped state of main selection
     const mainRange: EditorRange = this.expandRangeByWords(
@@ -241,19 +234,19 @@ export class BetterFormatting {
     const targetWrapState = !isWrapped
 
     // re-get selection each time to get new ch offsets
-    for (let i = 0; i < selections.length; i++) {
-      const selection = selections[i]
-
-      const cursorOffsets = this.setSelectionWrapState(
-        editor,
-        selection,
-        targetWrapState,
-        symbolStart,
-        symbolEnd,
+    const changes: Array<EditorChange> = []
+    for (const selection of selections) {
+      changes.push(
+        ...this.setSelectionWrapState(editor, selection, targetWrapState, symbolStart, symbolEnd),
       )
-      applyOffsets(selections, cursorOffsets)
     }
 
-    editor.setSelections(selections, mainSelectionIdx)
+    const transaction: EditorTransaction = {
+      changes: changes,
+    }
+    let origin = targetWrapState ? '+' : '-'
+    origin += 'BetterFormatting_' + symbolStart + symbolEnd
+
+    editor.transaction(transaction, origin)
   }
 }
