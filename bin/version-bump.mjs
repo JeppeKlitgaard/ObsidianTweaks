@@ -48,7 +48,7 @@ async function pExec(cmd) {
   await writeFile("versions.json", JSON.stringify(versions, null, "\t"));
 
   console.log("Adding to git")
-  await pExec("git add manifest.json manifest-beta.json package.json versions.json .yarn/versions")
+  await pExec("git add manifest.json package.json versions.json .yarn/versions")
 
   console.log("Commiting to git")
   await pExec(`git commit -m "release(chore): ${targetVersion}"`)
