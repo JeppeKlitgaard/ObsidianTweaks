@@ -1,4 +1,4 @@
-import { Plugin } from 'obsidian'
+import { Editor, MarkdownView, Plugin } from 'obsidian'
 import { BetterFormatting } from 'tweaks/BetterFormatting'
 import { DEBUG_HEAD } from 'tweaks/Constants'
 import { DirectionalCopy } from 'tweaks/DirectionalCopy'
@@ -31,15 +31,15 @@ export default class ObsidianTweaksPlugin extends Plugin {
     this.addCommand({
       id: 'select-line',
       name: 'Select Current Line(s)',
-      callback: () => {
-        this.selectionHelper.selectLine()
+      editorCallback: (editor: Editor, view: MarkdownView) => {
+        this.selectionHelper.selectLine(editor, view)
       },
     })
     this.addCommand({
       id: 'select-word',
       name: 'Select Current Word(s)',
-      callback: () => {
-        this.selectionHelper.selectWord()
+      editorCallback: (editor: Editor, view: MarkdownView) => {
+        this.selectionHelper.selectWord(editor, view)
       },
     })
 
@@ -47,77 +47,77 @@ export default class ObsidianTweaksPlugin extends Plugin {
     this.addCommand({
       id: 'better-formatting-bold-underscore',
       name: 'Better Toggle Bold (underscores)',
-      callback: () => {
-        this.betterFormatting.toggleWrapper('__', '__')
+      editorCallback: (editor: Editor, view: MarkdownView) => {
+        this.betterFormatting.toggleWrapper(editor, view, '__', '__')
       },
     })
     this.addCommand({
       id: 'better-formatting-bold-asterisk',
       name: 'Better Toggle Bold (asterisks)',
-      callback: () => {
-        this.betterFormatting.toggleWrapper('**', '**')
+      editorCallback: (editor: Editor, view: MarkdownView) => {
+        this.betterFormatting.toggleWrapper(editor, view, '**', '**')
       },
     })
 
     this.addCommand({
       id: 'better-formatting-italics-underscore',
       name: 'Better Toggle Italics (underscore)',
-      callback: () => {
-        this.betterFormatting.toggleWrapper('_', '_')
+      editorCallback: (editor: Editor, view: MarkdownView) => {
+        this.betterFormatting.toggleWrapper(editor, view, '_', '_')
       },
     })
     this.addCommand({
       id: 'better-formatting-italics-asterisk',
       name: 'Better Toggle Italics (asterisk)',
-      callback: () => {
-        this.betterFormatting.toggleWrapper('*', '*')
+      editorCallback: (editor: Editor, view: MarkdownView) => {
+        this.betterFormatting.toggleWrapper(editor, view, '*', '*')
       },
     })
 
     this.addCommand({
       id: 'better-formatting-code',
       name: 'Better Toggle Code',
-      callback: () => {
-        this.betterFormatting.toggleWrapper('`', '`')
+      editorCallback: (editor: Editor, view: MarkdownView) => {
+        this.betterFormatting.toggleWrapper(editor, view, '`', '`')
       },
     })
 
     this.addCommand({
       id: 'better-formatting-comment',
       name: 'Better Toggle Comment',
-      callback: () => {
-        this.betterFormatting.toggleWrapper('%%', '%%')
+      editorCallback: (editor: Editor, view: MarkdownView) => {
+        this.betterFormatting.toggleWrapper(editor, view, '%%', '%%')
       },
     })
 
     this.addCommand({
       id: 'better-formatting-highlight',
       name: 'Better Toggle Highlight',
-      callback: () => {
-        this.betterFormatting.toggleWrapper('==', '==')
+      editorCallback: (editor: Editor, view: MarkdownView) => {
+        this.betterFormatting.toggleWrapper(editor, view, '==', '==')
       },
     })
 
     this.addCommand({
       id: 'better-formatting-strikethrough',
       name: 'Better Toggle Strikethrough',
-      callback: () => {
-        this.betterFormatting.toggleWrapper('~~', '~~')
+      editorCallback: (editor: Editor, view: MarkdownView) => {
+        this.betterFormatting.toggleWrapper(editor, view, '~~', '~~')
       },
     })
 
     this.addCommand({
       id: 'better-formatting-math-inline',
       name: 'Better Toggle Math (Inline)',
-      callback: () => {
-        this.betterFormatting.toggleWrapper('$', '$')
+      editorCallback: (editor: Editor, view: MarkdownView) => {
+        this.betterFormatting.toggleWrapper(editor, view, '$', '$')
       },
     })
     this.addCommand({
       id: 'better-formatting-math-block',
       name: 'Better Toggle Math (Block)',
-      callback: () => {
-        this.betterFormatting.toggleWrapper('$$', '$$')
+      editorCallback: (editor: Editor, view: MarkdownView) => {
+        this.betterFormatting.toggleWrapper(editor, view, '$$', '$$')
       },
     })
 
@@ -125,15 +125,15 @@ export default class ObsidianTweaksPlugin extends Plugin {
     this.addCommand({
       id: 'move-left',
       name: 'Move Selection Left',
-      callback: () => {
-        this.directionalMove.directionalMove(Direction.Left)
+      editorCallback: (editor: Editor, view: MarkdownView) => {
+        this.directionalMove.directionalMove(editor, view, Direction.Left)
       },
     })
     this.addCommand({
       id: 'move-right',
       name: 'Move Selection Right',
-      callback: () => {
-        this.directionalMove.directionalMove(Direction.Right)
+      editorCallback: (editor: Editor, view: MarkdownView) => {
+        this.directionalMove.directionalMove(editor, view, Direction.Right)
       },
     })
 
@@ -141,29 +141,29 @@ export default class ObsidianTweaksPlugin extends Plugin {
     this.addCommand({
       id: 'copy-line-up',
       name: 'Copy Current Line(s) Up',
-      callback: () => {
-        this.directionalCopy.directionalCopy(Direction.Up)
+      editorCallback: (editor: Editor, view: MarkdownView) => {
+        this.directionalCopy.directionalCopy(editor, view, Direction.Up)
       },
     })
     this.addCommand({
       id: 'copy-line-down',
       name: 'Copy Current Line(s) Down',
-      callback: () => {
-        this.directionalCopy.directionalCopy(Direction.Down)
+      editorCallback: (editor: Editor, view: MarkdownView) => {
+        this.directionalCopy.directionalCopy(editor, view, Direction.Down)
       },
     })
     this.addCommand({
       id: 'copy-line-left',
       name: 'Copy Current Line(s) Left',
-      callback: () => {
-        this.directionalCopy.directionalCopy(Direction.Left)
+      editorCallback: (editor: Editor, view: MarkdownView) => {
+        this.directionalCopy.directionalCopy(editor, view, Direction.Left)
       },
     })
     this.addCommand({
       id: 'copy-line-right',
       name: 'Copy Current Line(s) Right',
-      callback: () => {
-        this.directionalCopy.directionalCopy(Direction.Right)
+      editorCallback: (editor: Editor, view: MarkdownView) => {
+        this.directionalCopy.directionalCopy(editor, view, Direction.Right)
       },
     })
 
@@ -171,43 +171,43 @@ export default class ObsidianTweaksPlugin extends Plugin {
     this.addCommand({
       id: 'toggle-heading-1',
       name: 'Toggle Heading - H1',
-      callback: () => {
-        this.toggleHeading.toggleHeading(Heading.H1)
+      editorCallback: (editor: Editor, view: MarkdownView) => {
+        this.toggleHeading.toggleHeading(editor, view, Heading.H1)
       },
     })
     this.addCommand({
       id: 'toggle-heading-2',
       name: 'Toggle Heading - H2',
-      callback: () => {
-        this.toggleHeading.toggleHeading(Heading.H2)
+      editorCallback: (editor: Editor, view: MarkdownView) => {
+        this.toggleHeading.toggleHeading(editor, view, Heading.H2)
       },
     })
     this.addCommand({
       id: 'toggle-heading-3',
       name: 'Toggle Heading - H3',
-      callback: () => {
-        this.toggleHeading.toggleHeading(Heading.H3)
+      editorCallback: (editor: Editor, view: MarkdownView) => {
+        this.toggleHeading.toggleHeading(editor, view, Heading.H3)
       },
     })
     this.addCommand({
       id: 'toggle-heading-4',
       name: 'Toggle Heading - H4',
-      callback: () => {
-        this.toggleHeading.toggleHeading(Heading.H4)
+      editorCallback: (editor: Editor, view: MarkdownView) => {
+        this.toggleHeading.toggleHeading(editor, view, Heading.H4)
       },
     })
     this.addCommand({
       id: 'toggle-heading-5',
       name: 'Toggle Heading - H5',
-      callback: () => {
-        this.toggleHeading.toggleHeading(Heading.H5)
+      editorCallback: (editor: Editor, view: MarkdownView) => {
+        this.toggleHeading.toggleHeading(editor, view, Heading.H5)
       },
     })
     this.addCommand({
       id: 'toggle-heading-6',
       name: 'Toggle Heading - H6',
-      callback: () => {
-        this.toggleHeading.toggleHeading(Heading.H6)
+      editorCallback: (editor: Editor, view: MarkdownView) => {
+        this.toggleHeading.toggleHeading(editor, view, Heading.H6)
       },
     })
 

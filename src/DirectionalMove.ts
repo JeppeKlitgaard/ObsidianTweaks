@@ -1,4 +1,4 @@
-import { App, MarkdownView } from 'obsidian'
+import { App, Editor, MarkdownView } from 'obsidian'
 import { Direction } from 'tweaks/Entities'
 import ObsidianTweaksPlugin from 'tweaks/main'
 
@@ -11,16 +11,7 @@ export class DirectionalMove {
     this.plugin = plugin
   }
 
-  directionalMove(direction: Direction): void {
-    const activeView = this.app.workspace.getActiveViewOfType(MarkdownView)
-    if (!activeView) {
-      return
-    }
-
-    // We need to use cm directly to get control of change origins.
-    // In the future Obsidian API will likely include support for this.
-    const editor = activeView.editor
-
+  directionalMove(editor: Editor, view: MarkdownView, direction: Direction): void {
     const selection = editor.getSelection()
 
     const anchor = editor.getCursor('from')

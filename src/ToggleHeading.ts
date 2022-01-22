@@ -62,14 +62,7 @@ export class ToggleHeading {
     return matches[1].length
   }
 
-  toggleHeading(heading: Heading): void {
-    const activeView = this.app.workspace.getActiveViewOfType(MarkdownView)
-    if (!activeView) {
-      return
-    }
-
-    const editor = activeView.editor
-
+  toggleHeading(editor: Editor, view: MarkdownView, heading: Heading): void {
     const selections = editor.listSelections()
     const mainSelection = getMainSelection(editor)
     const mainRange = selectionToRange(mainSelection)

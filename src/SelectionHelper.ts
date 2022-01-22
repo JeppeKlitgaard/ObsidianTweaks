@@ -1,4 +1,4 @@
-import { App, MarkdownView } from 'obsidian'
+import { App, Editor, MarkdownView } from 'obsidian'
 import ObsidianTweaksPlugin from 'tweaks/main'
 
 export class SelectionHelper {
@@ -10,14 +10,7 @@ export class SelectionHelper {
     this.plugin = plugin
   }
 
-  selectLine(): void {
-    const activeView = this.app.workspace.getActiveViewOfType(MarkdownView)
-    if (!activeView) {
-      return
-    }
-
-    const editor = activeView.editor
-
+  selectLine(editor: Editor, view: MarkdownView): void {
     const anchor = editor.getCursor('from')
     const head = editor.getCursor('to')
 
@@ -31,14 +24,7 @@ export class SelectionHelper {
     return
   }
 
-  selectWord(): void {
-    const activeView = this.app.workspace.getActiveViewOfType(MarkdownView)
-    if (!activeView) {
-      return
-    }
-
-    const editor = activeView.editor
-
+  selectWord(editor: Editor, view: MarkdownView): void {
     const anchor = editor.getCursor('from')
     let head = editor.getCursor('to')
 

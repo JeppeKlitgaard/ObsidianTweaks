@@ -205,17 +205,10 @@ export class BetterFormatting {
     return this.unwrap(editor, textRange, symbolStart, symbolEnd)
   }
 
-  toggleWrapper(symbolStart: string, symbolEnd?: string): void {
+  toggleWrapper(editor: Editor, view: MarkdownView, symbolStart: string, symbolEnd?: string): void {
     // Principle:
     // Toggling twice == no-op
     // This is not trivial to achieve :(
-    const activeView = this.app.workspace.getActiveViewOfType(MarkdownView)
-    if (!activeView) {
-      return
-    }
-
-    const editor = activeView.editor
-
     if (symbolEnd === undefined) {
       symbolEnd = symbolStart
     }

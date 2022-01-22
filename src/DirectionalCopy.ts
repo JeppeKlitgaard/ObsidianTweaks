@@ -1,4 +1,4 @@
-import { App, MarkdownView } from 'obsidian'
+import { App, Editor, MarkdownView } from 'obsidian'
 import { Direction } from 'tweaks/Entities'
 import ObsidianTweaksPlugin from 'tweaks/main'
 
@@ -11,14 +11,7 @@ export class DirectionalCopy {
     this.plugin = plugin
   }
 
-  directionalCopy(direction: Direction): void {
-    const activeView = this.app.workspace.getActiveViewOfType(MarkdownView)
-    if (!activeView) {
-      return
-    }
-
-    const editor = activeView.editor
-
+  directionalCopy(editor: Editor, view: MarkdownView, direction: Direction): void {
     const anchor = editor.getCursor('from')
     const head = editor.getCursor('to')
 
