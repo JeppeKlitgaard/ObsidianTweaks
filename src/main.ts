@@ -1,12 +1,12 @@
 import { Plugin } from 'obsidian'
-import { SelectionHelper } from 'SelectionHelper'
-import { BetterFormatting } from 'BetterFormatting'
-import { DirectionalMove } from 'DirectionalMove'
-import { DirectionalCopy } from 'DirectionalCopy'
-import { ToggleHeading, Heading } from 'ToggleHeading'
-import { DEBUG_HEAD } from 'Constants'
-import { DEFAULT_SETTINGS, ObsidianTweaksSettings, ObsidianTweaksSettingTab } from 'Settings'
-import { Direction } from 'Entities'
+import { BetterFormatting } from 'tweaks/BetterFormatting'
+import { DEBUG_HEAD } from 'tweaks/Constants'
+import { DirectionalCopy } from 'tweaks/DirectionalCopy'
+import { DirectionalMove } from 'tweaks/DirectionalMove'
+import { Direction } from 'tweaks/Entities'
+import { SelectionHelper } from 'tweaks/SelectionHelper'
+import { DEFAULT_SETTINGS, ObsidianTweaksSettings, ObsidianTweaksSettingTab } from 'tweaks/Settings'
+import { Heading, ToggleHeading } from 'tweaks/ToggleHeading'
 
 export default class ObsidianTweaksPlugin extends Plugin {
   public settings: ObsidianTweaksSettings

@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import {
   App,
   Editor,
@@ -6,9 +7,8 @@ import {
   EditorTransaction,
   MarkdownView,
 } from 'obsidian'
-import ObsidianTweaksPlugin from 'main'
-import { getMainSelection, selectionToRange } from 'Utils'
-import _ from 'lodash'
+import ObsidianTweaksPlugin from 'tweaks/main'
+import { getMainSelection, selectionToRange } from 'tweaks/Utils'
 
 export enum Heading {
   NORMAL = 0,

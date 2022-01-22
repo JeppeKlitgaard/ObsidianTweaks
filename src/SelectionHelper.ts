@@ -1,5 +1,5 @@
 import { App, MarkdownView } from 'obsidian'
-import ObsidianTweaksPlugin from 'main'
+import ObsidianTweaksPlugin from 'tweaks/main'
 
 export class SelectionHelper {
   public app: App

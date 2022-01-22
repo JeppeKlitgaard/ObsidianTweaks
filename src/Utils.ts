@@ -1,5 +1,5 @@
-import { EditorSelection, EditorRange, Editor } from 'obsidian'
 import _ from 'lodash'
+import { Editor, EditorRange, EditorSelection } from 'obsidian'
 
 export function getMainSelection(editor: Editor): EditorSelection {
   return {

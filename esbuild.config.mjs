@@ -1,6 +1,7 @@
 import esbuild from "esbuild";
 import process from "process";
 import builtins from "builtin-modules";
+import {pnpPlugin} from "@yarnpkg/esbuild-plugin-pnp"
 
 const banner =
 `/*
@@ -15,6 +16,7 @@ esbuild.build({
     banner: {
         js: banner,
     },
+    plugins: [pnpPlugin()],
     entryPoints: ['src/main.ts'],
     bundle: true,
     external: ['obsidian', 'electron', ...builtins],

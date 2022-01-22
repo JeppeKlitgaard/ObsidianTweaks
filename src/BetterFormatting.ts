@@ -8,8 +8,8 @@ import {
   EditorTransaction,
   MarkdownView,
 } from 'obsidian'
-import ObsidianTweaksPlugin from 'main'
-import { getMainSelection, selectionToRange } from 'Utils'
+import ObsidianTweaksPlugin from 'tweaks/main'
+import { getMainSelection, selectionToRange } from 'tweaks/Utils'
 
 export class BetterFormatting {
   public app: App
@@ -35,6 +35,7 @@ export class BetterFormatting {
 
     // Do additional expansions intelligently
     // Include leading 'widows'
+    // eslint-disable-next-line no-constant-condition
     while (true) {
       const newFrom: EditorPosition = {
         line: from.line,
@@ -66,6 +67,7 @@ export class BetterFormatting {
     }
 
     // Include leading 'widows'
+    // eslint-disable-next-line no-constant-condition
     while (true) {
       const newFrom: EditorPosition = {
         line: from.line,

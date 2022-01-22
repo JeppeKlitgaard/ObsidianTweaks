@@ -4,7 +4,8 @@
   "description": "A small plugin that implements some sorely missed features.",
   "main": "main.js",
   "scripts": {
-    "build": "node esbuild.config.mjs production",
+    "build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
+    "vup": "node bin/version-bump.mjs",
     "check": "tsc --noEmit --watch",
     "dev": "node esbuild.config.mjs",
     "lint": "eslint \"src/**/*.{ts,tsx}\" --quiet --fix"
@@ -16,22 +17,24 @@
   "license": "Unlicense",
   "devDependencies": {
     "@types/lodash": "^4.14.178",
-    "@types/node": "^14.14.37",
-    "@typescript-eslint/eslint-plugin": "^5.9.0",
-    "@typescript-eslint/parser": "^5.9.0",
-    "auto": "^10.29.3",
-    "auto-plugin-obsidian": "^0.1.4",
+    "@types/node": "^14.18.9",
+    "@typescript-eslint/eslint-plugin": "^5.10.0",
+    "@typescript-eslint/parser": "^5.10.0",
+    "@yarnpkg/esbuild-plugin-pnp": "^2.0.0",
     "builtin-modules": "^3.2.0",
     "esbuild": "0.14.3",
-    "eslint": "^8.6.0",
+    "eslint": "^8.7.0",
     "eslint-config-prettier": "^8.3.0",
+    "eslint-import-resolver-typescript": "^2.5.0",
+    "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
     "eslint-plugin-unused-imports": "^2.0.0",
     "lodash": "^4.17.21",
-    "obsidian": "^0.13.11",
+    "obsidian": "^0.13.21",
     "prettier": "^2.5.1",
-    "rollup": "^2.32.1",
-    "tslib": "^2.2.0",
-    "typescript": "^4.5.4"
+    "tslib": "^2.3.1",
+    "tweaks": "link:./src",
+    "typescript": "^4.5.5"
   }
 }
