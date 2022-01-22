@@ -35,8 +35,8 @@ export class SelectionHelper {
       head = { line: head.line, ch: head.ch + 1 }
     }
 
-    const wordStart = editor.wordAt(anchor).from
-    const wordEnd = editor.wordAt(head).to
+    const wordStart = editor.wordAt(anchor)?.from ?? anchor
+    const wordEnd = editor.wordAt(head)?.to ?? head
 
     editor.setSelection(
       { line: wordStart.line, ch: wordStart.ch },
