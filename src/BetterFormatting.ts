@@ -141,7 +141,7 @@ export class BetterFormatting {
       },
       {
         from: textRange.to,
-        text: symbolStart,
+        text: symbolEnd,
       },
     ]
 
