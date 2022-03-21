@@ -68,7 +68,7 @@ Install the Obsidian plugin via one of the three methods described below.
 
 ### Community Plugins
 
-Install this plugin via the Obsidian Community Plugin interface (**Currently not yet released, so this method DOES NOT WORK CURRENTLY**)
+Install this plugin via the Obsidian Community Plugin interface (**Strongly Recommended**)
 
 You can activate this plugin within Obsidian by doing the following:
 
