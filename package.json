@@ -8,7 +8,7 @@
     "vup": "node bin/version-bump.mjs",
     "check": "tsc --noEmit --watch",
     "dev": "node esbuild.config.mjs",
-    "lint": "eslint \"src/**/*.{ts,tsx}\" --quiet --fix"
+    "lint": "eslint \"src/**/*.{ts,tsx}\" \"bin/**/*.{mjs,js,jsx,ts,tsx}\" --quiet --fix"
   },
   "keywords": [
     "obsidian"
