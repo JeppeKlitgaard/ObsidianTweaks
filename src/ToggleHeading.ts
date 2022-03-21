@@ -35,7 +35,6 @@ export class ToggleHeading {
     const headingStr = '#'.repeat(heading)
     const text = editor.getLine(line)
     const matches = ToggleHeading.HEADING_REGEX.exec(text)!
-    console.log(matches)
 
     const from: EditorPosition = {
       line: line,
