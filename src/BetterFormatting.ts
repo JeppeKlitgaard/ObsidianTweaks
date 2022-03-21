@@ -1,9 +1,11 @@
+import _ from 'lodash'
 import {
   App,
   Editor,
   EditorChange,
   EditorPosition,
   EditorRange,
+  EditorRangeOrCaret,
   EditorSelection,
   EditorTransaction,
   MarkdownView,
@@ -131,9 +133,10 @@ export class BetterFormatting {
   private wrap(
     editor: Editor,
     textRange: EditorRange,
+    selection: EditorSelection,
     symbolStart: string,
     symbolEnd: string,
-  ): Array<EditorChange> {
+  ): [Array<EditorChange>, EditorSelection] {
     const changes: Array<EditorChange> = [
       {
         from: textRange.from,
@@ -145,15 +148,20 @@ export class BetterFormatting {
       },
     ]
 
-    return changes
+    const newSelection: EditorSelection = _.cloneDeep(selection)
+    newSelection.anchor.ch += symbolStart.length
+    newSelection.head.ch += symbolEnd.length
+
+    return [changes, newSelection]
   }
 
   private unwrap(
     editor: Editor,
     textRange: EditorRange,
+    selection: EditorSelection,
     symbolStart: string,
     symbolEnd: string,
-  ): Array<EditorChange> {
+  ): [Array<EditorChange>, EditorSelection] {
     const changes: Array<EditorChange> = [
       {
         from: textRange.from,
@@ -173,7 +181,11 @@ export class BetterFormatting {
       },
     ]
 
-    return changes
+    const newSelection: EditorSelection = _.cloneDeep(selection)
+    newSelection.anchor.ch -= symbolStart.length
+    newSelection.head.ch -= symbolStart.length
+
+    return [changes, newSelection]
   }
 
   private setSelectionWrapState(
@@ -182,7 +194,7 @@ export class BetterFormatting {
     wrapState: boolean,
     symbolStart: string,
     symbolEnd: string,
-  ): Array<EditorChange> {
+  ): [Array<EditorChange>, EditorSelection] {
     const initialRange = selectionToRange(selection)
     const textRange: EditorRange = this.expandRangeByWords(
       editor,
@@ -194,18 +206,23 @@ export class BetterFormatting {
     // Check if already wrapped
     const alreadyWrapped = this.isWrapped(editor, textRange, symbolStart, symbolEnd)
     if (alreadyWrapped === wrapState) {
-      return []
+      return [[], selection]
     }
 
     // Wrap or unwrap
     if (wrapState) {
-      return this.wrap(editor, textRange, symbolStart, symbolEnd)
+      return this.wrap(editor, textRange, selection, symbolStart, symbolEnd)
     }
 
-    return this.unwrap(editor, textRange, symbolStart, symbolEnd)
+    return this.unwrap(editor, textRange, selection, symbolStart, symbolEnd)
   }
 
-  toggleWrapper(editor: Editor, view: MarkdownView, symbolStart: string, symbolEnd?: string): void {
+  public toggleWrapper(
+    editor: Editor,
+    view: MarkdownView,
+    symbolStart: string,
+    symbolEnd?: string,
+  ): void {
     // Principle:
     // Toggling twice == no-op
     // This is not trivial to achieve :(
@@ -229,16 +246,26 @@ export class BetterFormatting {
     const targetWrapState = !isWrapped
 
     // re-get selection each time to get new ch offsets
-    const changes: Array<EditorChange> = []
+    const newChanges: Array<EditorChange> = []
+    const newSelectionRanges: Array<EditorRangeOrCaret> = []
     for (const selection of selections) {
-      changes.push(
-        ...this.setSelectionWrapState(editor, selection, targetWrapState, symbolStart, symbolEnd),
+      const [changes, newSelection] = this.setSelectionWrapState(
+        editor,
+        selection,
+        targetWrapState,
+        symbolStart,
+        symbolEnd,
       )
+
+      newChanges.push(...changes)
+      newSelectionRanges.push(selectionToRange(newSelection))
     }
 
     const transaction: EditorTransaction = {
-      changes: changes,
+      changes: newChanges,
+      selections: newSelectionRanges,
     }
+
     let origin = targetWrapState ? '+' : '-'
     origin += 'BetterFormatting_' + symbolStart + symbolEnd
 
