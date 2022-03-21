@@ -1,5 +1,6 @@
-import { App, Editor, MarkdownView } from 'obsidian'
+import { App, Editor, EditorRange, EditorTransaction, MarkdownView } from 'obsidian'
 import ObsidianTweaksPlugin from 'tweaks/main'
+import { selectionToRange } from 'tweaks/Utils'
 
 export class SelectionHelper {
   public app: App
@@ -11,38 +12,50 @@ export class SelectionHelper {
   }
 
   selectLine(editor: Editor, view: MarkdownView): void {
-    const anchor = editor.getCursor('from')
-    const head = editor.getCursor('to')
+    const selections = editor.listSelections()
 
-    const headLength = editor.getLine(head.line).length
+    const newSelections: Array<EditorRange> = []
+    for (const selection of selections) {
+      const range = selectionToRange(selection)
 
-    // Modifying and passing the EditorPosition objects does not work
-    // reliably.
-    // Use this approach instead.
-    editor.setSelection({ line: anchor.line, ch: 0 }, { line: head.line, ch: headLength })
+      const toLength = editor.getLine(range.to.line).length
+      const newSelection: EditorRange = {
+        from: { line: range.from.line, ch: 0 },
+        to: { line: range.to.line, ch: toLength },
+      }
 
-    return
+      newSelections.push(newSelection)
+    }
+
+    const transaction: EditorTransaction = {
+      selections: newSelections,
+    }
+
+    editor.transaction(transaction, 'SelectionHelper_Line')
   }
 
   selectWord(editor: Editor, view: MarkdownView): void {
-    const anchor = editor.getCursor('from')
-    let head = editor.getCursor('to')
+    const selections = editor.listSelections()
 
-    // If next char is a space, we want to grab a whole new word.
-    const nextChar = editor.getRange(head, { line: head.line, ch: head.ch + 1 })
+    const newSelections: Array<EditorRange> = []
+    for (const selection of selections) {
+      const range = selectionToRange(selection)
 
-    if (nextChar === ' ') {
-      head = { line: head.line, ch: head.ch + 1 }
+      const wordStart = editor.wordAt(range.from)?.from ?? range.from
+      const wordEnd = editor.wordAt(range.to)?.to ?? range.from
+
+      const newSelection: EditorRange = {
+        from: { line: wordStart.line, ch: wordStart.ch },
+        to: { line: wordEnd.line, ch: wordEnd.ch },
+      }
+
+      newSelections.push(newSelection)
     }
 
-    const wordStart = editor.wordAt(anchor)?.from ?? anchor
-    const wordEnd = editor.wordAt(head)?.to ?? head
+    const transaction: EditorTransaction = {
+      selections: newSelections,
+    }
 
-    editor.setSelection(
-      { line: wordStart.line, ch: wordStart.ch },
-      { line: wordEnd.line, ch: wordEnd.ch },
-    )
-
-    return
+    editor.transaction(transaction, 'SelectionHelper_Line')
   }
 }
