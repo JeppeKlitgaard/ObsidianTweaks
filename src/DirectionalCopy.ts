@@ -1,6 +1,7 @@
-import { App, Editor, MarkdownView } from 'obsidian'
+import { App, Editor, EditorChange, EditorTransaction, MarkdownView } from 'obsidian'
 import { Direction } from 'tweaks/Entities'
 import ObsidianTweaksPlugin from 'tweaks/main'
+import { selectionToLine, selectionToRange } from 'tweaks/Utils'
 
 export class DirectionalCopy {
   public app: App
@@ -12,47 +13,69 @@ export class DirectionalCopy {
   }
 
   directionalCopy(editor: Editor, view: MarkdownView, direction: Direction): void {
-    const anchor = editor.getCursor('from')
-    const head = editor.getCursor('to')
+    const selections = editor.listSelections()
 
-    const headLength = editor.getLine(head.line).length
+    const vertical: boolean = direction === Direction.Up || direction === Direction.Down
 
-    const textToCopyVertical = editor.getRange(
-      { line: anchor.line, ch: 0 },
-      { line: head.line, ch: headLength },
-    )
-
-    // Copy up
-    if (direction === Direction.Up) {
-      editor.replaceRange(textToCopyVertical + '\n', { line: anchor.line, ch: 0 })
-      editor.setSelection({ line: anchor.line, ch: anchor.ch }, { line: head.line, ch: head.ch })
-    }
-    // Copy down
-    else if (direction === Direction.Down) {
-      const addedLines = head.line - anchor.line
-
-      editor.replaceRange('\n' + textToCopyVertical, { line: head.line, ch: headLength })
-      editor.setSelection(
-        { line: anchor.line + addedLines + 1, ch: anchor.ch },
-        { line: head.line + addedLines + 1, ch: head.ch },
-      )
-    }
-    // Copy left
-    else if (direction === Direction.Left) {
-      const textToCopy = editor.getSelection()
-
-      editor.replaceRange(textToCopy, { line: anchor.line, ch: anchor.ch })
-      editor.setSelection({ line: anchor.line, ch: anchor.ch }, { line: head.line, ch: head.ch })
-    }
-    // Copy right
-    else if (direction === Direction.Right) {
-      const textToCopy = editor.getSelection()
-
-      editor.replaceRange(textToCopy, { line: anchor.line, ch: anchor.ch })
-    } else {
-      this.plugin.debug('Something went wrong...')
+    // If vertical we want to work with whole lines.
+    if (vertical) {
+      selections.forEach((selection, idx, arr) => {
+        arr[idx] = selectionToLine(editor, selection)
+      })
     }
 
-    return
+    const changes: Array<EditorChange> = []
+    for (const selection of selections) {
+      const range = selectionToRange(selection)
+      const content = editor.getRange(range.from, range.to)
+
+      let change: EditorChange
+      switch (direction) {
+        case Direction.Up: {
+          change = {
+            from: range.from,
+            to: range.from,
+            text: content + '\n',
+          }
+          break
+        }
+
+        case Direction.Down: {
+          change = {
+            from: range.to,
+            to: range.to,
+            text: '\n' + content,
+          }
+          break
+        }
+
+        case Direction.Left: {
+          change = {
+            from: range.from,
+            to: range.from,
+            text: content,
+          }
+          break
+        }
+
+        case Direction.Right: {
+          change = {
+            from: range.to,
+            to: range.to,
+            text: content,
+          }
+          break
+        }
+      }
+
+      changes.push(change)
+    }
+
+    const transaction: EditorTransaction = {
+      changes: changes,
+    }
+
+    const origin = 'DirectionalCopy_' + String(direction)
+    editor.transaction(transaction, origin)
   }
 }

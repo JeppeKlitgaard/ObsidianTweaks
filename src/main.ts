@@ -154,14 +154,14 @@ export default class ObsidianTweaksPlugin extends Plugin {
     })
     this.addCommand({
       id: 'copy-line-left',
-      name: 'Copy Current Line(s) Left',
+      name: 'Copy Current Selection(s) Left',
       editorCallback: (editor: Editor, view: MarkdownView) => {
         this.directionalCopy.directionalCopy(editor, view, Direction.Left)
       },
     })
     this.addCommand({
       id: 'copy-line-right',
-      name: 'Copy Current Line(s) Right',
+      name: 'Copy Current Selections(s) Right',
       editorCallback: (editor: Editor, view: MarkdownView) => {
         this.directionalCopy.directionalCopy(editor, view, Direction.Right)
       },

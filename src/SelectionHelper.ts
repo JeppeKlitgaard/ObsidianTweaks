@@ -1,6 +1,6 @@
 import { App, Editor, EditorRange, EditorTransaction, MarkdownView } from 'obsidian'
 import ObsidianTweaksPlugin from 'tweaks/main'
-import { selectionToRange } from 'tweaks/Utils'
+import { selectionToLine, selectionToRange } from 'tweaks/Utils'
 
 export class SelectionHelper {
   public app: App
@@ -14,21 +14,15 @@ export class SelectionHelper {
   selectLine(editor: Editor, view: MarkdownView): void {
     const selections = editor.listSelections()
 
-    const newSelections: Array<EditorRange> = []
+    const newSelectionRanges: Array<EditorRange> = []
     for (const selection of selections) {
-      const range = selectionToRange(selection)
+      const newSelection = selectionToLine(editor, selection)
 
-      const toLength = editor.getLine(range.to.line).length
-      const newSelection: EditorRange = {
-        from: { line: range.from.line, ch: 0 },
-        to: { line: range.to.line, ch: toLength },
-      }
-
-      newSelections.push(newSelection)
+      newSelectionRanges.push(selectionToRange(newSelection))
     }
 
     const transaction: EditorTransaction = {
-      selections: newSelections,
+      selections: newSelectionRanges,
     }
 
     editor.transaction(transaction, 'SelectionHelper_Line')

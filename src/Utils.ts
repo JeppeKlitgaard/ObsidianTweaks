@@ -16,3 +16,15 @@ export function selectionToRange(selection: EditorSelection): EditorRange {
     to: sortedPositions[1],
   }
 }
+
+export function selectionToLine(editor: Editor, selection: EditorSelection): EditorSelection {
+  const range = selectionToRange(selection)
+
+  const toLength = editor.getLine(range.to.line).length
+  const newSelection: EditorSelection = {
+    anchor: { line: range.from.line, ch: 0 },
+    head: { line: range.to.line, ch: toLength },
+  }
+
+  return newSelection
+}
