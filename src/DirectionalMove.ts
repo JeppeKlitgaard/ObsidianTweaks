@@ -1,6 +1,7 @@
-import { App, Editor, MarkdownView } from 'obsidian'
+import { App, Editor, EditorChange, EditorTransaction, MarkdownView } from 'obsidian'
 import { Direction } from 'tweaks/Entities'
 import ObsidianTweaksPlugin from 'tweaks/main'
+import { selectionToRange } from 'tweaks/Utils'
 
 export class DirectionalMove {
   public app: App
@@ -11,75 +12,65 @@ export class DirectionalMove {
     this.plugin = plugin
   }
 
-  directionalMove(editor: Editor, view: MarkdownView, direction: Direction): void {
-    const selection = editor.getSelection()
+  directionalMove(
+    editor: Editor,
+    view: MarkdownView,
+    direction: Direction.Left | Direction.Right,
+  ): void {
+    const selections = editor.listSelections()
 
-    const anchor = editor.getCursor('from')
-    const head = editor.getCursor('to')
+    const changes: Array<EditorChange> = []
+    for (const selection of selections) {
+      const range = selectionToRange(selection)
 
-    // Move left
-    if (direction === Direction.Left) {
-      if (anchor.ch - 1 < 0) {
-        this.plugin.debug('Moving across lines is not supported.')
-        return
+      let additionChange: EditorChange
+      let deletionChange: EditorChange
+      switch (direction) {
+        case Direction.Left: {
+          deletionChange = {
+            from: {
+              line: range.from.line,
+              ch: range.from.ch - 1,
+            },
+            to: range.from,
+            text: '',
+          }
+
+          additionChange = {
+            from: range.to,
+            to: range.to,
+            text: editor.getRange(deletionChange.from, deletionChange.to!),
+          }
+          break
+        }
+
+        case Direction.Right: {
+          deletionChange = {
+            from: range.to,
+            to: {
+              line: range.to.line,
+              ch: range.to.ch + 1,
+            },
+            text: '',
+          }
+
+          additionChange = {
+            from: range.from,
+            to: range.from,
+            text: editor.getRange(deletionChange.from, deletionChange.to!),
+          }
+          break
+        }
       }
 
-      const nextChar = editor.getRange(
-        { line: anchor.line, ch: anchor.ch - 1 },
-        { line: anchor.line, ch: anchor.ch },
-      )
-
-      editor.replaceRange(
-        nextChar,
-        { line: head.line, ch: head.ch - 1 },
-        { line: head.line, ch: head.ch },
-        '+tweakMoveLeft',
-      )
-
-      editor.replaceRange(
-        selection,
-        { line: anchor.line, ch: anchor.ch - 1 },
-        { line: head.line, ch: head.ch - 1 },
-        '+tweakMoveLeft',
-      )
-
-      editor.setSelection(
-        { line: anchor.line, ch: anchor.ch - 1 },
-        { line: head.line, ch: head.ch - 1 },
-      )
-    } else if (direction === Direction.Right) {
-      if (head.ch + 1 > editor.getLine(head.line).length) {
-        this.plugin.debug('Moving across lines is not supported.')
-        return
-      }
-
-      const nextChar = editor.getRange(
-        { line: head.line, ch: head.ch },
-        { line: head.line, ch: head.ch + 1 },
-      )
-
-      editor.replaceRange(
-        nextChar,
-        { line: anchor.line, ch: anchor.ch },
-        { line: anchor.line, ch: anchor.ch + 1 },
-        '+tweakMoveLeft',
-      )
-
-      editor.replaceRange(
-        selection,
-        { line: anchor.line, ch: anchor.ch + 1 },
-        { line: head.line, ch: head.ch + 1 },
-        '+tweakMoveLeft',
-      )
-
-      editor.setSelection(
-        { line: anchor.line, ch: anchor.ch + 1 },
-        { line: head.line, ch: head.ch + 1 },
-      )
-    } else {
-      this.plugin.debug('Something went wrong...')
+      changes.push(deletionChange, additionChange)
     }
 
-    return
+    const transaction: EditorTransaction = {
+      changes: changes,
+    }
+
+    const origin = 'DirectionalMove_' + String(direction)
+    editor.transaction(transaction, origin)
   }
 }

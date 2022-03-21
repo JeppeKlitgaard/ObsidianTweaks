@@ -22,8 +22,8 @@ They are all set to <kbd>Blank</kbd> by default. Go to `Settings > Hotkeys` to s
 ### Commands
 | Recommended hotkey | Action |
 | --- | --- |
-| <kbd>Alt</kbd> + <kbd>←</kbd> | Move Selection Left |
-| <kbd>Alt</kbd> + <kbd>→</kbd> | Move Selection Right |
+| <kbd>Shift</kbd> + <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>←</kbd> | Move Selection Left |
+| <kbd>Shift</kbd> + <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>→</kbd> | Move Selection Right |
 | <kbd>Blank</kbd> | Better Toggle Bold (asterisks) |
 | <kbd>Ctrl</kbd> + <kbd>B</kbd> | Better Toggle Bold (underscores) |
 | <kbd>Blank</kbd> | Better Toggle Italics (asterisks) |
