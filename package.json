@@ -1,6 +1,6 @@
 {
   "name": "obsidian-tweaks",
-  "version": "0.2.7",
+  "version": "0.3.0",
   "description": "A small plugin that implements some sorely missed features.",
   "main": "main.js",
   "scripts": {
