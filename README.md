@@ -43,11 +43,8 @@ They are all set to <kbd>Blank</kbd> by default. Go to `Settings > Hotkeys` to s
 | <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>4</kbd> | Toggle Heading - H4 |
 | <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>5</kbd> | Toggle Heading - H5 |
 | <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>6</kbd> | Toggle Heading - H6 |
-
-### Move selection
-
-Move selection does not support going across lines. This seems unnecessary and
-is really messy to implement.
+| <kbd>Blank</kbd> | New Adjacent File |
+| <kbd>Blank</kbd> | Duplicate File |
 ### Better Toggles
 
 The default toggles in Obsidian can be a bit wonky at times and do not always

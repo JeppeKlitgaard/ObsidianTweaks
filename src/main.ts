@@ -4,6 +4,7 @@ import { DEBUG_HEAD } from 'tweaks/Constants'
 import { DirectionalCopy } from 'tweaks/DirectionalCopy'
 import { DirectionalMove } from 'tweaks/DirectionalMove'
 import { Direction } from 'tweaks/Entities'
+import { FileHelper } from 'tweaks/FileHelper'
 import { SelectionHelper } from 'tweaks/SelectionHelper'
 import { DEFAULT_SETTINGS, ObsidianTweaksSettings, ObsidianTweaksSettingTab } from 'tweaks/Settings'
 import { Heading, ToggleHeading } from 'tweaks/ToggleHeading'
@@ -16,6 +17,7 @@ export default class ObsidianTweaksPlugin extends Plugin {
   private directionalMove: DirectionalMove
   private directionalCopy: DirectionalCopy
   private toggleHeading: ToggleHeading
+  private fileHelper: FileHelper
 
   async onload() {
     console.log('Loading Obsidian Tweaks...')
@@ -26,6 +28,7 @@ export default class ObsidianTweaksPlugin extends Plugin {
     this.directionalMove = new DirectionalMove(this.app, this)
     this.directionalCopy = new DirectionalCopy(this.app, this)
     this.toggleHeading = new ToggleHeading(this.app, this)
+    this.fileHelper = new FileHelper(this.app, this)
 
     // SelectionHelper
     this.addCommand({
@@ -208,6 +211,23 @@ export default class ObsidianTweaksPlugin extends Plugin {
       name: 'Toggle Heading - H6',
       editorCallback: (editor: Editor, view: MarkdownView) => {
         this.toggleHeading.toggleHeading(editor, view, Heading.H6)
+      },
+    })
+
+    // FileHelper
+    this.addCommand({
+      id: 'new-adjacent-file',
+      name: 'New Adjacent File',
+      editorCallback: (editor: Editor, view: MarkdownView) => {
+        this.fileHelper.newAdjacentFile(editor, view)
+      },
+    })
+
+    this.addCommand({
+      id: 'duplicate-file',
+      name: 'Duplicate File',
+      editorCallback: (editor: Editor, view: MarkdownView) => {
+        this.fileHelper.duplicateFile(editor, view)
       },
     })
 
