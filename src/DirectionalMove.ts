@@ -1,7 +1,7 @@
 import { App, Editor, EditorChange, EditorTransaction, MarkdownView } from 'obsidian'
-import { Direction } from 'tweaks/Entities'
-import ObsidianTweaksPlugin from 'tweaks/main'
-import { selectionToRange } from 'tweaks/Utils'
+import { Direction } from 'src/Entities'
+import ObsidianTweaksPlugin from 'src/main'
+import { selectionToRange } from 'src/Utils'
 
 export class DirectionalMove {
   public app: App

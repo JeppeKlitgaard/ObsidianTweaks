@@ -1,6 +1,6 @@
 import { App, Editor, EditorRange, EditorTransaction, MarkdownView } from 'obsidian'
-import ObsidianTweaksPlugin from 'tweaks/main'
-import { selectionToLine, selectionToRange } from 'tweaks/Utils'
+import ObsidianTweaksPlugin from 'src/main'
+import { selectionToLine, selectionToRange } from 'src/Utils'
 
 export class SelectionHelper {
   public app: App
