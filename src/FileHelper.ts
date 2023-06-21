@@ -1,5 +1,5 @@
 import { App, Editor, MarkdownView, Notice } from 'obsidian'
-import ObsidianTweaksPlugin from 'tweaks/main'
+import ObsidianTweaksPlugin from 'src/main'
 
 export class FileHelper {
   public app: App

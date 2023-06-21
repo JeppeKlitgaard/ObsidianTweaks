@@ -1,5 +1,5 @@
 import { App, PluginSettingTab, Setting } from 'obsidian'
-import ObsidianTweaksPlugin from 'tweaks/main'
+import ObsidianTweaksPlugin from 'src/main'
 
 export interface ObsidianTweaksSettings {
   debug: boolean

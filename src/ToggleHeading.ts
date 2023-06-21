@@ -7,8 +7,8 @@ import {
   EditorTransaction,
   MarkdownView,
 } from 'obsidian'
-import ObsidianTweaksPlugin from 'tweaks/main'
-import { getMainSelection, selectionToRange } from 'tweaks/Utils'
+import ObsidianTweaksPlugin from 'src/main'
+import { getMainSelection, selectionToRange } from 'src/Utils'
 
 export enum Heading {
   NORMAL = 0,

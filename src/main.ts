@@ -1,13 +1,13 @@
 import { Editor, MarkdownView, Plugin } from 'obsidian'
-import { BetterFormatting } from 'tweaks/BetterFormatting'
-import { DEBUG_HEAD } from 'tweaks/Constants'
-import { DirectionalCopy } from 'tweaks/DirectionalCopy'
-import { DirectionalMove } from 'tweaks/DirectionalMove'
-import { Direction } from 'tweaks/Entities'
-import { FileHelper } from 'tweaks/FileHelper'
-import { SelectionHelper } from 'tweaks/SelectionHelper'
-import { DEFAULT_SETTINGS, ObsidianTweaksSettings, ObsidianTweaksSettingTab } from 'tweaks/Settings'
-import { Heading, ToggleHeading } from 'tweaks/ToggleHeading'
+import { BetterFormatting } from 'src/BetterFormatting'
+import { DEBUG_HEAD } from 'src/Constants'
+import { DirectionalCopy } from 'src/DirectionalCopy'
+import { DirectionalMove } from 'src/DirectionalMove'
+import { Direction } from 'src/Entities'
+import { FileHelper } from 'src/FileHelper'
+import { SelectionHelper } from 'src/SelectionHelper'
+import { DEFAULT_SETTINGS, ObsidianTweaksSettings, ObsidianTweaksSettingTab } from 'src/Settings'
+import { Heading, ToggleHeading } from 'src/ToggleHeading'
 
 export default class ObsidianTweaksPlugin extends Plugin {
   public settings: ObsidianTweaksSettings
@@ -144,40 +144,40 @@ export default class ObsidianTweaksPlugin extends Plugin {
     this.addCommand({
       id: 'copy-line-up',
       name: 'Copy Current Line(s) Up',
-      editorCallback: (editor: Editor, view: MarkdownView) => {
-        this.directionalCopy.directionalCopy(editor, view, Direction.Up)
+      editorCallback: (editor: Editor) => {
+        this.directionalCopy.directionalCopy(editor, Direction.Up)
       },
     })
     this.addCommand({
       id: 'copy-line-down',
       name: 'Copy Current Line(s) Down',
-      editorCallback: (editor: Editor, view: MarkdownView) => {
-        this.directionalCopy.directionalCopy(editor, view, Direction.Down)
+      editorCallback: (editor: Editor) => {
+        this.directionalCopy.directionalCopy(editor, Direction.Down)
       },
     })
     this.addCommand({
       id: 'copy-line-left',
       name: 'Copy Current Selection(s) Left',
-      editorCallback: (editor: Editor, view: MarkdownView) => {
-        this.directionalCopy.directionalCopy(editor, view, Direction.Left)
+      editorCallback: (editor: Editor) => {
+        this.directionalCopy.directionalCopy(editor, Direction.Left)
       },
     })
     this.addCommand({
       id: 'copy-line-right',
       name: 'Copy Current Selections(s) Right',
-      editorCallback: (editor: Editor, view: MarkdownView) => {
-        this.directionalCopy.directionalCopy(editor, view, Direction.Right)
+      editorCallback: (editor: Editor) => {
+        this.directionalCopy.directionalCopy(editor, Direction.Right)
       },
     })
 
     // Set heading
     this.addCommand({
-      id: 'toggle-heading-1',
-      name: 'Toggle Heading - H1',
-      editorCallback: (editor: Editor, view: MarkdownView) => {
-        this.toggleHeading.toggleHeading(editor, view, Heading.H1)
-      },
-    })
+		id: "toggle-heading-1",
+		name: "Toggle Heading - H1",
+		editorCallback: (editor: Editor, view: MarkdownView) => {
+			this.toggleHeading.toggleHeading(editor, view, Heading.H1);
+		},
+	});
     this.addCommand({
       id: 'toggle-heading-2',
       name: 'Toggle Heading - H2',
